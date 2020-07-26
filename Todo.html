@@ -1,0 +1,169 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>To-Do App</title>
+  </head>
+  <body id="body">
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rajdhani');
+
+      #input {
+        height: 28px;
+        width: 550px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+        font-size: 15px;
+        margin-top: 10px;
+        padding: 10px;
+      }
+
+      body {
+        margin: 0;
+        padding: 0px;
+        margin-left: 39px;
+        margin-right: 39px;
+      }
+
+      .h2 {
+        width: 100%;
+        height: auto;
+
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+        text-decoration: none;
+        font-size: 32px;
+        margin: 30px auto 10px auto;
+      }
+
+      .h4 {
+        width: 100%;
+        height: auto;
+
+        font-family: 'Times New Roman', Times, serif;
+        text-decoration: none;
+        font-size: 1.5em;
+        margin: 10px auto 10px auto;
+        color: rgb(75, 16, 6);
+      }
+
+      .button {
+        height: 28px;
+        width: 100px;
+        background-color: rgb(5, 255, 180);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+        color: rgb(0, 76, 53);
+        border: none;
+        margin: 1px;
+      }
+
+      .buttonimp {
+        height: 28px;
+        width: 100px;
+        background-color: rgb(132, 0, 0);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+        color: rgb(255, 255, 255);
+        border: none;
+        margin: 1px;
+      }
+
+      li {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 20px;
+      }
+    </style>
+
+    <h3 class="h2">To-Do App</h3>
+    <div id="line">
+      <hr />
+    </div>
+
+    <input
+      type="text"
+      id="input"
+      class="box"
+      placeholder="Write Something To-Do"
+    />
+
+    <button onclick="additem();" class="button">Add</button>
+    <ol id="list" type="none"></ol>
+    <button onclick="removeAll();" class="buttonimp">Remove All</button>
+
+    <script>
+      function additem() {
+        var item = document.getElementById('input');
+        if (item.value == '' || item.value === ' ') {
+          alert('Enter any text here..!');
+        } else {
+          item.value = item.value + ' ';
+
+          var input = document.getElementById('input').value;
+          var ul = document.getElementById('list');
+
+          var li = document.createElement('li');
+          li.innerHTML = input;
+          li.setAttribute('id', Math.random());
+
+          var editButton = document.createElement('button');
+          editButton.setAttribute('class', 'button');
+          editButton.innerHTML = 'Edit';
+          editButton.setAttribute('onClick', 'editItem(event)');
+          li.appendChild(editButton);
+
+          var deleteButton = document.createElement('button');
+          deleteButton.setAttribute('class', 'button');
+          deleteButton.innerHTML = 'Delete';
+          deleteButton.setAttribute('onClick', 'deleteItem(event)');
+          li.appendChild(deleteButton);
+
+          ul.appendChild(li);
+
+          document.getElementById('input').value = ' ';
+        }
+      }
+
+      function editItem(event) {
+        var updateList = document.getElementById('update');
+        if (updateList) {
+          updateList.remove();
+        }
+
+        var current = event.target.parentElement;
+        var text = current.childNodes[0].textContent;
+        document.getElementById('input').value = text;
+
+        var updateButton = document.createElement('button');
+        updateButton.setAttribute('class', 'button');
+        updateButton.setAttribute('id', 'update');
+        updateButton.setAttribute('onClick', 'updateItem(' + current.id + ')');
+        updateButton.innerHTML = 'Update';
+
+        var body = document.getElementById('body');
+        var ol = document.getElementById('list');
+        body.insertBefore(updateButton, ol);
+      }
+
+      function deleteItem(event) {
+        var current = event.target.parentElement;
+        current.remove();
+      }
+
+      function updateItem(id) {
+        var input = document.getElementById('input').value;
+
+        var item = document.getElementById(id);
+        item.childNodes[0].textContent = input;
+        var up = document.getElementById('update');
+        up.parentNode.removeChild(up);
+        var item = (document.getElementById('input').value = ' ');
+      }
+
+      function removeAll() {
+        document.getElementById('list').innerHTML = ' ';
+      }
+    </script>
+  </body>
+</html>
